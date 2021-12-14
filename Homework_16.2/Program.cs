@@ -15,29 +15,27 @@ namespace Homework_16._2
     {
         static void Main(string[] args)
         {
-            string path = "C:/Users/marve/YandexDisk/Autodesk_ITMO_2021/1-CSharp/Homework_16/Products.json";
+            string path = "C:/Users/marve/YandexDisk/Autodesk_ITMO_2021/1-CSharp/Homework_16/Homework_16/bin/Debug/Products.json";
             string jsonString = File.ReadAllText(path);
-            Product products = JsonSerializer.Deserialize<Product>(jsonString);
-            Console.WriteLine("Код продукта: {0}", products.ProductCode);
-            Console.WriteLine("Наименование продукта: {0}", products.ProductName);
-            Console.WriteLine("Цена продукта: {0}", products.ProductPrice);
+            Product[] products = JsonSerializer.Deserialize<Product[]>(jsonString);
+            double max = products[0].ProductPrice;
+            string expensive = products[0].ProductName;
+            for (int i = 1; i < 5; i++)
+            {
+                if (products[i].ProductPrice > max)
+                {
+                    max = products[i].ProductPrice;
+                    expensive = products[i].ProductName;
+                }
+            }
+            Console.WriteLine("Самый дорогой товар - {0}", expensive);
             Console.ReadKey();
         }
     }
     class Product
     {
-        [JsonPropertyName("Код продукта")]
         public int ProductCode { get; set; }
-        [JsonPropertyName("Наименование продукта")]
         public string ProductName { get; set; }
-        [JsonPropertyName("Цена продукта")]
         public double ProductPrice { get; set; }
-
-        public Product(int code, string name, double price)
-        {
-            ProductCode = code;
-            ProductName = name;
-            ProductPrice = price;
-        }
     }
 }

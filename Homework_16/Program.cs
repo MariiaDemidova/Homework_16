@@ -15,38 +15,28 @@ namespace Homework_16
     {
         static void Main(string[] args)
         {
-            string path = "C:/Users/marve/YandexDisk/Autodesk_ITMO_2021/1-CSharp/Homework_16/Products.json";
-            if (!File.Exists(path))
-            {
-                File.Create(path);
-            }
+            string path = "C:/Users/marve/YandexDisk/Autodesk_ITMO_2021/1-CSharp/Homework_16/Homework_16/bin/Debug/Products.json";
             Product[] products = new Product[5];
             for (int i = 0; i < 5; i++)
             {
                 Console.WriteLine("Введите поочередно с новой строчки код, название и цену продукта");
-                products [i] = new Product(Convert.ToInt32(Console.ReadLine()), Convert.ToString(Console.ReadLine()), Convert.ToDouble(Console.ReadLine()));
-                //JsonSerializerOptions options = new JsonSerializerOptions()
-                //{
-                   // Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-                   // WriteIndented = true
-                //};
-               // string jsonString = JsonSerializer.Serialize<Product>(products[i], options);
-                //using (StreamWriter sw = new StreamWriter(path, true))
-                //{
-                 //   sw.WriteLine(jsonString);
-                //}
+                products[i] = new Product()
+                {
+                    ProductCode = Convert.ToInt32(Console.ReadLine()),
+                    ProductName = Convert.ToString(Console.ReadLine()),
+                    ProductPrice = Convert.ToDouble(Console.ReadLine())
+                };
             }
             JsonSerializerOptions options = new JsonSerializerOptions()
             {
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
                 WriteIndented = true
             };
-            string jsonString = JsonSerializer.Serialize<Product>(products, options);
+            string jsonString = JsonSerializer.Serialize(products, options);
             using (StreamWriter sw = new StreamWriter(path, true))
             {
                 sw.WriteLine(jsonString);
             }
-            Console.ReadKey();
         }
         class Product
         {
@@ -56,13 +46,6 @@ namespace Homework_16
             public string ProductName { get; set; }
             [JsonPropertyName("Цена продукта")]
             public double ProductPrice { get; set; }
-
-            public Product(int code, string name, double price)
-            {
-                ProductCode = code;
-                ProductName = name;
-                ProductPrice = price;
-            }
         }
     }
 }
