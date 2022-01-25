@@ -40,11 +40,8 @@ namespace Homework_16
         }
         class Product
         {
-            [JsonPropertyName("Код продукта")]
             public int ProductCode { get; set; }
-            [JsonPropertyName("Наименование продукта")]
             public string ProductName { get; set; }
-            [JsonPropertyName("Цена продукта")]
             public double ProductPrice { get; set; }
         }
     }
